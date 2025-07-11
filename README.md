@@ -1,8 +1,8 @@
-<<<<<<< HEAD
-=======
+
+# VisualScan
+#### 这是一个用于演示的DEMO
 
 
->>>>>>> eb46360459023c7ee7f917c44d5472667bb1bce4
 ## Run Locally
 
 **Prerequisites:**  Node.js
@@ -16,3 +16,4 @@
 
 
 description: https://www.notion.so/VisualScan-6aa3718f249a40cb8d09544e81802b2b?source=copy_link
+
