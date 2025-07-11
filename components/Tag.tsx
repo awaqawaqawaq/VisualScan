@@ -59,13 +59,17 @@ const Tag: React.FC<TagProps> = ({ tag, onUpvote, onDownvote, onTagSelect, isOff
   const netVotes = (tag.upvotes || 0) - (tag.downvotes || 0);
   const hasVotesToShow = !isOfficial && (tag.upvotes || 0) > 0;
 
+  const isClickable = !!onTagSelect;
+
 
   return (
     <div className="relative group">
-      <button 
-        onClick={handleTagClick}
-        disabled={!onTagSelect}
-        className={`flex items-center gap-2 pl-2.5 pr-1 py-1 rounded-full text-xs font-medium ring-1 ring-inset transition-all ${colorClass} ${onTagSelect ? 'cursor-pointer' : 'cursor-default'}`}
+      <div 
+        onClick={isClickable ? handleTagClick : undefined}
+        onKeyDown={isClickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTagClick(); } } : undefined}
+        role={isClickable ? "button" : undefined}
+        tabIndex={isClickable ? 0 : -1}
+        className={`flex items-center gap-2 pl-2.5 pr-1 py-1 rounded-full text-xs font-medium ring-1 ring-inset transition-all outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500 ${colorClass} ${isClickable ? 'cursor-pointer' : 'cursor-default'}`}
       >
         <span>{tag.text}</span>
         {tag.asset && <span className="ml-1.5 text-xs font-mono text-gray-400 opacity-80">[{tag.asset}]</span>}
@@ -92,7 +96,7 @@ const Tag: React.FC<TagProps> = ({ tag, onUpvote, onDownvote, onTagSelect, isOff
            <span className="font-mono text-xs px-2 text-gray-300 bg-gray-900/30 rounded-full ml-1.5">{netVotes}</span>
         )}
 
-      </button>
+      </div>
       {!disableTooltip && (
           <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-max max-w-xs bg-gray-700 text-white text-xs rounded-md px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-lg ring-1 ring-gray-600 z-20">
               {tag.submittedBy === 'MemeRadar' ? (

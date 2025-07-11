@@ -15,12 +15,16 @@ export const generateAddressSummary = async (addressData: AddressData): Promise<
   
   const { pnlData } = addressData;
 
+  const fansCount = typeof pnlData.twitter_fans_num === 'number'
+    ? pnlData.twitter_fans_num.toLocaleString()
+    : pnlData.twitter_fans_num;
+
   const prompt = `
     Analyze the following Web3 wallet based on its detailed PNL, trading, and social data. Provide a concise, insightful summary (max 3-4 sentences) of the user's likely profile and trading strategy.
 
     **Address:** ${addressData.address}
     **Name/ENS:** ${pnlData.name || pnlData.ens || 'Not available'}
-    **Twitter:** @${pnlData.twitter_username} (${pnlData.twitter_fans_num.toLocaleString()} fans)
+    **Twitter:** @${pnlData.twitter_username} (${fansCount} fans)
     **Community Tags:** ${pnlData.tags.join(', ')}
 
     **Key Performance Metrics:**
@@ -44,7 +48,7 @@ export const generateAddressSummary = async (addressData: AddressData): Promise<
       model: 'gemini-2.5-flash',
       contents: prompt,
     });
-    return response.text as string;
+    return response.text;
   } catch (error) {
     console.error("Error generating address summary with Gemini:", error);
     // Throw the error so the UI can handle it specifically
