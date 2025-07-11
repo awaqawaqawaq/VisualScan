@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> eb46360459023c7ee7f917c44d5472667bb1bce4
 ## Run Locally
 
 **Prerequisites:**  Node.js
